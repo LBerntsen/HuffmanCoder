@@ -18,9 +18,23 @@
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
+       <widget class="QLabel" name="mStatus">
+        <property name="text">
+         <string>Select a file to compress/decompress</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignmentFlag::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QLineEdit" name="mSelectedFile"/>
+         <widget class="QLineEdit" name="mSelectedFile">
+          <property name="placeholderText">
+           <string>Enter a .txt file</string>
+          </property>
+         </widget>
         </item>
         <item>
          <widget class="QPushButton" name="mBrowseFiles">
@@ -48,16 +62,6 @@
          </widget>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QLabel" name="mStatus">
-        <property name="text">
-         <string>Select a file to compress/decompress</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignmentFlag::AlignCenter</set>
-        </property>
-       </widget>
       </item>
      </layout>
     </item>

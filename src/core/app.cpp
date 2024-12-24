@@ -18,7 +18,7 @@ App::App()
 	
 	mMainWindow->show();
 
-    cSwitchCharacter = "^";
+    cSwitchCharacter = "§";
 
 	connect(mMainWindow, &MainWindow::sigCompress, this, &App::onCompress);
 	connect(mMainWindow, &MainWindow::sigDecompress, this, &App::onDecompress);

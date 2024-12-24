@@ -95,7 +95,51 @@ App::onCompress(QString aFilePath)
 void
 App::onDecompress(QString aFilePath)
 {
-	
+    // Read encoding table and data from file
+    QFile file(aFilePath);
+    file.open(QIODevice::ReadOnly);
+    QTextStream textStream(&file);
+    QString encodingTableStream = textStream.readLine();
+    QString dataStream = textStream.readAll();
+    file.close();
+
+    // Create decoding hash from encoding table
+    QHash<QString, QString> decodingHash;
+    QStringList encodingTableParts = encodingTableStream.split(";");
+    for(int i = 0; i < encodingTableParts.length(); i++)
+    {
+        QString code = encodingTableParts[i];
+        if(code == "" || code == "\n")
+            continue;
+
+        QStringList codeParts = code.split("^");
+        decodingHash[codeParts[1]] = codeParts[0];
+    }
+
+    // Decode
+    QString outStream = "";
+    QString currentCode = "";
+    for(int i = 0; i < dataStream.length(); i++)
+    {
+        QString code = dataStream[i];
+        currentCode += code;
+        if(decodingHash.contains(currentCode))
+        {
+            outStream += decodingHash[currentCode];
+            currentCode = "";
+        }
+    }
+    outStream = outStream.replace(cSwitchCharacter, "\n");
+
+    // Write decoded data to file with decompressed suffix
+    QFileInfo fileInfo(aFilePath);
+    QStringList filenameParts = fileInfo.fileName().split(".");
+    QString filename = filenameParts[0] + "_decompressed." + filenameParts[1];
+    QFile decompressedFile(fileInfo.absolutePath() + "/" + filename);
+    decompressedFile.open(QIODevice::WriteOnly);
+    QTextStream outTextStream(&decompressedFile);
+    outTextStream << outStream;
+    decompressedFile.close();
 }
 
 

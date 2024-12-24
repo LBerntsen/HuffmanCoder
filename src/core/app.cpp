@@ -22,6 +22,7 @@ App::App()
 
 	connect(mMainWindow, &MainWindow::sigCompress, this, &App::onCompress);
 	connect(mMainWindow, &MainWindow::sigDecompress, this, &App::onDecompress);
+    connect(this, &App::sigStatusChanged, mMainWindow, &MainWindow::onStatusChanged);
 }
 
 App::~App()
@@ -83,12 +84,7 @@ App::onCompress(QString aFilePath)
     outTextStream << outStream;
     compressedFile.close();
 
-    /**
-    *    # Print stats
-    print(f"File before was {bitsBefore} bits in size, the compressed file is {bitsAfter} bits in size.")
-    print(f"This results in {bitsBefore - bitsAfter} bits saved, or around {(bitsBefore - bitsAfter)/8} bytes saved.")
-     *
-     */
+    emit sigStatusChanged(QString("New file was written to %1 \n Old file was %2 bits in size \n The compressed file is %3 bits in size \n This results in %4 bits saved or around %5 bytes saved.").arg(filename).arg(bitsBefore).arg(bitsAfter).arg(bitsBefore - bitsAfter).arg((bitsBefore - bitsAfter) / 8));
 }
 
 
@@ -140,6 +136,8 @@ App::onDecompress(QString aFilePath)
     QTextStream outTextStream(&decompressedFile);
     outTextStream << outStream;
     decompressedFile.close();
+
+    emit sigStatusChanged(QString("New file was written to %1").arg(filename));
 }
 
 
@@ -238,6 +236,3 @@ App::traverseTree(Node *aTree, QHash<QString, int> &aCodes, QString aCode)
         traverseTree(aTree->getRightChild(), aCodes, code);
     }
 }
-
-//SETT MAINWINDWO TITTLE NAVN
-//HUFFMAN CODING old bits new bits bits saved, evt 2 linjer label

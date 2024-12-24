@@ -23,3 +23,26 @@ Node::getValue() const
 {
     return mValue;
 }
+
+
+bool
+Node::isLeaf()
+{
+    if(mLeftChild == nullptr && mRightChild == nullptr)
+        return true;
+    return false;
+}
+
+
+Node *
+Node::getLeftChild()
+{
+    return mLeftChild;
+}
+
+
+Node *
+Node::getRightChild()
+{
+    return mRightChild;
+}

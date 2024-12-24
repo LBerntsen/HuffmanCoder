@@ -10,6 +10,9 @@ public:
     Node(int aValue, Node *aLeftChild = nullptr, Node *aRightChild = nullptr);
     ~Node();
     int getValue() const;
+    bool isLeaf();
+    Node *getLeftChild();
+    Node *getRightChild();
 
 private:
     int mValue;

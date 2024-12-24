@@ -22,25 +22,30 @@ void
 PriorityQueue::append(Node *aNode)
 {
     if(length() == 0)
+    {
         mQueue.append(aNode);
-    else if(length() == 1)
+        return;
+    }
+
+    if(length() == 1)
     {
         if(mQueue.first()->getValue() < aNode->getValue())
             mQueue.append(aNode);
         else
             mQueue.insert(0, aNode);
+        return;
     }
-    else
+
+    for (int i = 0; i < length(); i++)
     {
-        for (int i = 0; i < length(); i++)
+        if (mQueue.at(i)->getValue() > aNode->getValue())
         {
-            if (mQueue.at(i)->getValue() > aNode->getValue())
-            {
-                mQueue.insert(i, aNode);
-                return;
-            }
+            mQueue.insert(i, aNode);
+            return;
         }
     }
+
+    mQueue.append(aNode);
 }
 
 

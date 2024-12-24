@@ -10,6 +10,17 @@ class MainWindow : public QMainWindow
 
 public:
 	MainWindow(QWidget *aParent = Q_NULLPTR);
+	~MainWindow();
+
+signals:
+	void sigCompress(QString aFilePath);
+	void sigDecompress(QString aFilePath);
+
+private slots:
+	void onBrowseFile();
+	void onValidateFile(QString aFilePath);
+	void onCompress();
+	void onDecompress();
 
 private:
 	Ui::MainWindowClass mUi;

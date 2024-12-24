@@ -21,7 +21,11 @@ add_executable(HuffmanCoder
         src/gui/mainwindow.cpp
         src/gui/mainwindow.h
         src/gui/mainwindow.ui
-        src/Resources/mainwindow.qrc)
+        src/Resources/mainwindow.qrc
+        src/core/PriorityQueue.cpp
+        src/core/PriorityQueue.h
+        src/core/Node.cpp
+        src/core/Node.h)
 
 target_link_libraries(HuffmanCoder
         Qt6::Core

@@ -26,6 +26,9 @@ private:
 	QHash<QString, QString> generateEncoding(Node *aTree, QHash<QString, int> aFrequencyHash);
 	void traverseTree(Node *aTree, QHash<QString, int> &aCodes, QString aCode);
 
+signals:
+	void sigStatusChanged(QString aStatus);
+
 private:
 	static App *sThis;
 	MainWindow *mMainWindow;

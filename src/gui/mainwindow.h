@@ -12,6 +12,9 @@ public:
 	MainWindow(QWidget *aParent = Q_NULLPTR);
 	~MainWindow();
 
+public slots:
+	void onStatusChanged(QString aStatus);
+
 signals:
 	void sigCompress(QString aFilePath);
 	void sigDecompress(QString aFilePath);

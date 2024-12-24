@@ -28,6 +28,13 @@ MainWindow::~MainWindow()
 
 
 void
+MainWindow::onStatusChanged(QString aStatus)
+{
+	mUi.mStatus->setText(aStatus);
+}
+
+
+void
 MainWindow::onBrowseFile()
 {
 	QString filePath = QFileDialog::getOpenFileUrl(this, "Open .txt file", QStandardPaths::standardLocations(QStandardPaths::DesktopLocation).last(), "Text Files (*.txt)").toString(QUrl::RemoveScheme);

@@ -63,14 +63,14 @@ App::onCompress(QString aFilePath)
     // Generate encoding table to send out into new compressed file line 1
     QString outEncoding = "";
     QList<QString> encodingKeys = encoding.keys();
-    for(int i = 0; i < encodingKeys.length(); i++)
-        outEncoding += QString("%1^%2;").arg(encodingKeys[i]).arg(encoding[encodingKeys[i]]);
+    for(QString key : encodingKeys)
+        outEncoding += QString("%1^%2;").arg(key).arg(encoding[key]);
     outEncoding += "\n";
 
     // Generate encoded stream to send out into new compressed file
     QString outStream = "";
-    for(int i = 0; i < stream.length(); i++)
-        outStream += encoding[stream[i]];
+    for(QString character : stream)
+        outStream += encoding[character];
     bitsAfter = outStream.length();
 
     // Write encoding table and data to file with compressed suffix
@@ -102,9 +102,8 @@ App::onDecompress(QString aFilePath)
     // Create decoding hash from encoding table
     QHash<QString, QString> decodingHash;
     QStringList encodingTableParts = encodingTableStream.split(";");
-    for(int i = 0; i < encodingTableParts.length(); i++)
+    for(QString code : encodingTableParts)
     {
-        QString code = encodingTableParts[i];
         if(code == "" || code == "\n")
             continue;
 
@@ -115,9 +114,8 @@ App::onDecompress(QString aFilePath)
     // Decode
     QString outStream = "";
     QString currentCode = "";
-    for(int i = 0; i < dataStream.length(); i++)
+    for(QString code : dataStream)
     {
-        QString code = dataStream[i];
         currentCode += code;
         if(decodingHash.contains(currentCode))
         {
@@ -146,9 +144,8 @@ App::countFrequency(QString aStream)
 {
     QHash<QString, int> frequencies;
 
-    for(int i = 0; i < aStream.length(); i++)
+    for(QString character: aStream)
     {
-        QString character = aStream.at(i);
         if(!frequencies.contains(character))
             frequencies[character] = 1;
         else
@@ -163,8 +160,8 @@ Node *
 App::generateTree(QList<int> aFrequencies)
 {
     PriorityQueue queue;
-    for(int i = 0; i < aFrequencies.length(); i++)
-        queue.append(new Node(aFrequencies[i]));
+    for(int frequency: aFrequencies)
+        queue.append(new Node(frequency));
 
     while(queue.length() > 1) // If list is 1 long then its only the root node
     {
